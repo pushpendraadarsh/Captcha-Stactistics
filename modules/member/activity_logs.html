@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'>
+	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+	</script>
+	<link rel="shortcut icon" href="images/icon/al.png" type="image/x-icon">
+	<link rel="stylesheet" href="css/style.css">
+	<title>Activity Log</title>
+</head>
+<div class="buffering none-display">
+    <div class="buffering-ele"></div>
+        </div>
+<body>
+    <main id="main_content">
+	<div class="header" style="text-align: center;">
+		Captcha Statistics
+	</div>
+	<div class="container">
+		<table border="3" id="userTable">
+			<thead>
+				<tr>
+					<th>Sr. No.</th>
+					<th>Title</th>
+					<th>Event</th>
+					<th>Date</th>
+					<th>Time</th>
+					<th>IP Address</th>
+				</tr>
+			</thead>
+			<tbody></tbody>
+		</table>
+	</div>
+</main>
+    <script>
+        function buffering(timeout){
+            $(".buffering").removeClass("none-display");
+            $("#main_content").css("opacity","0.2");
+            setTimeout(() => {
+                $(".buffering").addClass("none-display"); 
+                $("#main_content").css("opacity","1");       
+                  }, timeout);
+        }
+     </script>
+	<script>
+		//Send Ajax Request
+       $.ajax({
+        url: '/modules/member/js/activity.php',
+        type: 'post',
+        data:  {
+            'click': 1
+              },
+        dataType: "json",
+            success:function(response) {
+                if (response.action == "redirect") {
+                    window.location.href = "https://pggroup.tech/";
+                }else{
+                    buffering(3000);
+setTimeout(function(){
+                var len = response.length;
+            for(var i=0; i < len; i++){
+                var title = response[i].title;
+                var event = response[i].event;
+                var date = response[i].date;
+                var time = response[i].time;
+                var ip_address = response[i].ip_address;
+
+                var tr_str = "<tr>" +
+                    "<td>" + (i+1) + "</td>" +
+                    "<td>" + title + "</td>" +
+                    "<td>" + event + "</td>" +
+                    "<td>" + date + "</td>" +
+                    "<td>" + time + "</td>" +
+                    "<td>" + ip_address + "</td>" +
+                    "</tr>";
+                $("#userTable tbody").append(tr_str);
+        }
+     }, 3000);
+    }
+    }
+       });
+	</script>
+   
+</body>
+
+</html>
