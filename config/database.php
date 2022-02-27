@@ -1,9 +1,9 @@
 <?php 
 
-	$dbhost = 'sql309.epizy.com';
-	$dbuser = 'epiz_28975964';
-	$dbpass = 'Khushb00';
-	$dbname = 'epiz_28975964_ctpg'; 
+	$dbhost = 'localhost';
+	$dbuser = 'root';
+	$dbpass = '';
+	$dbname = 'ctpg'; 
     $timezone= date_default_timezone_set("Asia/Kolkata");
 	$conn= mysqli_connect('sql309.epizy.com', 'epiz_28975964', 'Khushb00', 'epiz_28975964_ctpg');
 
